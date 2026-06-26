@@ -62,7 +62,7 @@
     filter:drop-shadow(0 8px 14px rgba(0,0,0,.5));}
 
   #promptScreen,#cutsceneScreen{background:none;backdrop-filter:none;}
-  #cutsceneScreen{justify-content:flex-end;padding-bottom:40px;}
+  #cutsceneScreen{justify-content:flex-start;padding-top:26px;}
   .card{background:linear-gradient(135deg,rgba(46,42,82,.96),rgba(26,23,51,.96));border:3px solid var(--amber);
     border-radius:18px;padding:22px 36px;max-width:620px;box-shadow:0 0 40px rgba(244,166,91,.4);animation:pop .45s ease;}
   .card.celebrate{border-color:var(--peach);box-shadow:0 0 60px rgba(255,217,160,.55);}
@@ -785,6 +785,7 @@ async function startGame(){ Audio_.ensure(); Audio_.resume();
   hideAllScreens(); await fade(0); state=State.PLAYING; }
 async function celebrate(title,line){ await showPrompt({title,line,button:'Continue ▸',celebrate:true,auto:10000}); }
 async function finishLevelFlow(cur){ state=State.PROMPT; Audio_.stop();
+  document.getElementById('hud').classList.add('hidden');
   await reunionCutscene();
   await celebrate("🏅 Dean's Lister",'1st Semester — '+LEVELS[cur].year);
   await celebrate("🏅 Dean's Lister",'2nd Semester — '+LEVELS[cur].year);
@@ -792,8 +793,10 @@ async function finishLevelFlow(cur){ state=State.PROMPT; Audio_.stop();
   await showPrompt({title:`Proceed to ${LEVELS[cur+1].year}?`,line:'Ready for the next chapter?',button:`Proceed to ${LEVELS[cur+1].year} ▸`});
   await fade(1); setupLevel(cur+1);
   await showPrompt({title:LEVELS[cur+1].year,line:LEVELS[cur+1].sub,button:'Begin ▸',auto:10000});
+  document.getElementById('hud').classList.remove('hidden');
   hideAllScreens(); await fade(0); state=State.PLAYING; }
 async function graduationSequence(){ state=State.PROMPT; Audio_.stop();
+  document.getElementById('hud').classList.add('hidden');
   await reunionCutscene();
   await celebrate('🎓 Graduation Day','You walk across the stage, my graduate.');
   await celebrate('🌟 Cum Laude','Graduating with honors — every sleepless night, worth it.');
