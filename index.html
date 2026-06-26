@@ -728,11 +728,11 @@ function showPrompt(opts){ return new Promise(res=>{ state=State.PROMPT;
   document.getElementById('promptCard').classList.toggle('celebrate',!!opts.celebrate);
   game.promptConfetti=!!opts.celebrate; showScreen('promptScreen');
   if(opts.celebrate) Audio_.sfx('cheer');
-  _resolve=()=>{ game.promptConfetti=false; res(); };
+  _resolve=()=>{ game.promptConfetti=false; document.getElementById('promptScreen').classList.add('hidden'); res(); };
   if(opts.auto) _timer=setTimeout(confirmActive,opts.auto); }); }
 function showCutscene(drawFn,caption){ return new Promise(res=>{ state=State.CUTSCENE; game.cutsceneDraw=drawFn; game.cutsceneT=0;
   document.getElementById('cutsceneCaption').textContent=caption; showScreen('cutsceneScreen');
-  _resolve=()=>{ game.cutsceneDraw=null; res(); }; }); }
+  _resolve=()=>{ game.cutsceneDraw=null; document.getElementById('cutsceneScreen').classList.add('hidden'); res(); }; }); }
 const wait=ms=>new Promise(r=>setTimeout(r,ms));
 const fadeEl=document.getElementById('fade');
 function fade(to){ return new Promise(res=>{ fadeEl.style.transition='opacity .42s ease'; requestAnimationFrame(()=>{ fadeEl.style.opacity=to; }); setTimeout(res,440); }); }
